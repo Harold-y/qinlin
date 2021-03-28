@@ -31,7 +31,7 @@
 <script>
     $(function () {
         let userid = ${userid};
-        $("#personalImg").attr("src", "/img/userImg/" + userid + ".jpg" + "?" + Math.random());
+        $("#personalImg").attr("src", "/static/img/userImg/" + userid + ".jpg" + "?" + Math.random());
     })
     $('#personalImg').on("error", function () {
         $(this).attr('src', '/img/newone.jpg');  // 替换为默认图片

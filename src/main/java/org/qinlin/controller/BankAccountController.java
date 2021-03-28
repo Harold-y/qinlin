@@ -1,5 +1,6 @@
 package org.qinlin.controller;
 
+import org.qinlin.entity.BankAccount;
 import org.qinlin.service.BankAccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Isolation;
@@ -38,6 +39,29 @@ public class BankAccountController {
     @ResponseBody
     public List<LinkedHashMap> selectBankByUserId(Integer userid)
     {
-        return service.selectBankByUserId(userid);
+        List<LinkedHashMap> listHashMap = service.selectBankByUserId(userid);
+        for(LinkedHashMap map : listHashMap)
+        {
+            if(map!=null)
+            {
+                Integer id = (Integer) map.get("bankid");
+                String imgSrc = "/static/img/bank/"+id+".jpg";
+                map.put("imgSrc",imgSrc);
+            }
+        }
+        return listHashMap;
+    }
+
+    @RequestMapping("insert")
+    @ResponseBody
+    public int insert(BankAccount account)
+    {
+        return service.insert(account);
+    }
+    @RequestMapping("deleteByPrimaryKey")
+    @ResponseBody
+    public int deleteByPrimaryKey(Integer id)
+    {
+        return service.deleteByPrimaryKey(id);
     }
 }

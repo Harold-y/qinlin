@@ -1,5 +1,7 @@
 package org.qinlin.service;
 
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.qinlin.dao.mapper.UserMapper;
 import org.qinlin.entity.User;
 import org.qinlin.util.AESUtils;
@@ -56,6 +58,42 @@ public class UserService {
             return false;
         }
     }
+
+    public User selectByPrimaryKey(Integer userid)
+    {
+        return mapper.selectByPrimaryKey(userid);
+    }
+
+    @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
+    public int updateUsername(Integer userid, String username)
+    {
+        return mapper.updateUsername(userid, username);
+    }
+
+    @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
+    public int updateRealname(Integer userid, String realname)
+    {
+        return mapper.updateRealname(userid, realname);
+    }
+
+    @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
+    public int updatePhone(Integer userid, String phone)
+    {
+        return mapper.updatePhone(userid, phone);
+    }
+
+    @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
+    public int updatePassword(Integer userid, String originalPassword, String newPassword)
+    {
+        if(AESUtils.aesEncryptStr(originalPassword, "ifyoucanhearthisvoice,youarealon").equals(mapper.selectPasswordByUserId(userid)))
+        {
+            return mapper.updatePassword(userid, AESUtils.aesEncryptStr(newPassword, "ifyoucanhearthisvoice,youarealon"));
+        }else
+        {
+            return -1;
+        }
+    }
+
 
 
 }

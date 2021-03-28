@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Select;
 import org.qinlin.entity.Bank;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 @Mapper
 public interface BankMapper {
@@ -22,4 +23,7 @@ public interface BankMapper {
 
     @Select("select bank_cn_name, bank_eng_name, bank_abbre_name from bank where bankid = #{bankid}")
     LinkedHashMap selectBankByBankId(Integer bankid);
+
+    @Select("select bankid, bank_cn_name, bank_eng_name, bank_abbre_name from bank")
+    public List<Bank> selectAllBankInfo();
 }

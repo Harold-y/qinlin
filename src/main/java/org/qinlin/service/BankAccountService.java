@@ -46,4 +46,15 @@ public class BankAccountService {
     {
         return mapper.selectBankByUserId(userid);
     }
+
+    @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
+    public int insert(BankAccount account)
+    {
+        return mapper.insert(account);
+    }
+    @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
+    public int deleteByPrimaryKey(Integer id)
+    {
+        return mapper.deleteByPrimaryKey(id);
+    }
 }

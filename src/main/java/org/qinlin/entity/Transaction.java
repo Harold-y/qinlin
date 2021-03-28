@@ -1,5 +1,8 @@
 package org.qinlin.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Transaction {
@@ -13,7 +16,32 @@ public class Transaction {
 
     private Double amount;
 
+    @DateTimeFormat
     private Date transactionTime;
+
+    public Double getTotalCharge() {
+        return totalCharge;
+    }
+
+    public Transaction(Integer transactionid, Integer buyerid, Integer sellerid, Integer coinid, Double amount, Date transactionTime, Double totalCharge) {
+        this.transactionid = transactionid;
+        this.buyerid = buyerid;
+        this.sellerid = sellerid;
+        this.coinid = coinid;
+        this.amount = amount;
+        this.transactionTime = transactionTime;
+        this.totalCharge = totalCharge;
+    }
+
+    public Transaction() {
+    }
+
+    public void setTotalCharge(Double totalCharge) {
+        this.totalCharge = totalCharge;
+    }
+
+    private Double totalCharge;
+
 
     public Integer getTransactionid() {
         return transactionid;

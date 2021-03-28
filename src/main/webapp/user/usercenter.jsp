@@ -27,7 +27,7 @@
 <script>
     $(function () {
         let userid = ${userid};
-        $("#personalImg").attr("src", "/img/userImg/" + userid + ".jpg" + "?" + Math.random());
+        $("#personalImg").attr("src", "/static/img/userImg/" + userid + ".jpg" + "?" + Math.random());
     })
     $('#personalImg').on("error", function () {
         $(this).attr('src', '/img/newone.jpg');  // 替换为默认图片
@@ -118,24 +118,24 @@
                             <a href="overall.jsp" target="onlyIframe">我的账户</a>
                             <dl class="layui-nav-child">
                                 <dd><a href="tradeAccount.jsp" target="onlyIframe">币币账户</a></dd>
-                                <dd><a href="javascript:;">资金账户</a></dd>
-                                <dd><a href="">银行账户</a></dd>
+                                <dd><a href="capitalAccount.jsp" target="onlyIframe">资金账户</a></dd>
+                                <dd><a href="bankAccount.jsp" target="onlyIframe">银行账户</a></dd>
                             </dl>
                         </li>
                         <li class="layui-nav-item layui-nav-itemed">
                             <a href="javascript:;">个人信息</a>
                             <dl class="layui-nav-child">
-                                <dd><a href="javascript:;">修改个人信息</a></dd>
-                                <dd><a href="javascript:;">更新头像</a></dd>
+                                <dd><a href="editPersonalInfo.jsp" target="onlyIframe">修改个人信息</a></dd>
+                                <dd><a href="changeImg.jsp" target="onlyIframe">更新头像</a></dd>
                             </dl>
                         </li>
-                        <li class="layui-nav-item"><a href="">交易记录</a></li>
+                        <li class="layui-nav-item"><a href="transaction.jsp" target="onlyIframe">交易记录</a></li>
                         <li class="layui-nav-item"><a href="" @click="logOut">登出</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-10">
-                    <div id="onlyIframe" style="" >
-                        <iframe src="overall.jsp" name="onlyIframe" height="1300px" width="100%"></iframe>
+                    <div id="onlyIframeDiv" style="" >
+                        <iframe src="overall.jsp" id="onlyIframe" name="onlyIframe" height="1300px" width="100%"></iframe>
                     </div>
                 </div>
             </div>
