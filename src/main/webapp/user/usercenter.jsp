@@ -115,7 +115,8 @@
                     <ul class="layui-nav layui-nav-tree" lay-filter="test" style="height: 1310px">
                         <%--侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side">--%>
                         <li class="layui-nav-item layui-nav-itemed">
-                            <a href="overall.jsp" target="onlyIframe">我的账户</a>
+                            <a href="javascript:;">我的账户</a>
+                            <%--<a href="overall.jsp" target="onlyIframe">我的账户</a>--%>
                             <dl class="layui-nav-child">
                                 <dd><a href="tradeAccount.jsp" target="onlyIframe">币币账户</a></dd>
                                 <dd><a href="capitalAccount.jsp" target="onlyIframe">资金账户</a></dd>
@@ -135,7 +136,7 @@
                 </div>
                 <div class="col-sm-10">
                     <div id="onlyIframeDiv" style="" >
-                        <iframe src="overall.jsp" id="onlyIframe" name="onlyIframe" height="1300px" width="100%"></iframe>
+                        <iframe src="capitalAccount.jsp" id="onlyIframe" name="onlyIframe" height="1300px" width="100%"></iframe>
                     </div>
                 </div>
             </div>

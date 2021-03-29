@@ -57,71 +57,245 @@
 </style>
 <body>
 
-<div class="container">
-    <div class="row" style="margin-top: 4rem;">
-        <div class="col-sm-8">
-            <div class="row" style="border: 1px solid #e9ebf2; padding: 20px">
-                <div id="titleDiv">总计</div>
-                <div id="assetNumDiv">$1034,52</div>
-            </div>
-            <div class="row" style="border: 1px solid #e9ebf2; padding: 20px; margin-top: 2rem">
-                <div id="subTitleDiv1">币种分布</div>
-                <div style="width: 100%; border: 1px solid #e9ebf2"></div>
-                <div style="padding: 5px; margin-top: 1rem">币种</div>
-                <div id="coinTypeDiv" class="container-fluid">
-                    <div class="row">
-                        <div class="col-1">
-                            <img src="/static/img/coin/1.jpg" style="border-radius: 40px" height="40px">
-                        </div>
-                        <div class="col-4">
-                            <div class="row assetNameAbbre">FRO</div>
-                            <div class="row assetNameCN">霜逸币</div>
-                        </div>
-                        <div class="col-3">
-                            <div class="row assetAmount">1.52325</div>
-                            <div class="row assetDollar">$1425.32</div>
-                        </div>
-                        <div class="col-4">
-                            <div class="row assetPercent">100%</div>
-                            <div class="row assetPercentBar">
-                                <div class="progress" style="height: 4px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 25%;"aria-valuemin="0" aria-valuemax="100"></div>
+    <div id="main" class="container" >
+        <div class="row" style="margin-top: 4rem;">
+            <div class="col-sm-8">
+                <div class="row" style="border: 1px solid #e9ebf2; padding: 20px">
+                    <div id="titleDiv">总计</div>
+                    <div id="assetNumDiv">$ {{ sum }}</div>
+                </div>
+                <div class="row" style="border: 1px solid #e9ebf2; padding: 20px; margin-top: 2rem">
+                    <div id="subTitleDiv1">币种分布</div>
+                    <div style="width: 100%; border: 1px solid #e9ebf2"></div>
+                    <div style="padding: 5px; margin-top: 1rem">币种</div>
+                    <div id="coinTypeDiv" class="container-fluid">
+                        <div class="row" v-for="item in listCoinInfo" style="padding: 20px">
+                            <div class="col-1">
+                                <img v-bind:src="item.coinImgSrc" style="border-radius: 40px" height="40px">
+                            </div>
+                            <div class="col-4">
+                                <div class="row assetNameAbbre">{{item.abbre_name}}</div>
+                                <div class="row assetNameCN">{{item.cn_name}}</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="row assetAmount">{{ item.amount }}</div>
+                                <div class="row assetDollar">$ {{ item.total_worth }}</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="row assetPercent">{{ item.percentage*100 }}%</div>
+                                <div class="row assetPercentBar">
+                                    <div class="progress" style="height: 4px;">
+                                        <div class="progress-bar" role="progressbar" name="progressBarDiv" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
-        <div class="col-sm-3 offset-1" style="border: 1px solid #e9ebf2;">
-            <div class="row">
-                <div id="subTitleDiv2">转移至交易账户</div>
             </div>
-            <div style="width: 100%; border: 1px solid #e9ebf2"></div>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" aria-label="Text input with dropdown button" v-model="coinAmount"
-                       id="coinInput">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">购入币种</button>
-                <ul class="dropdown-menu dropdown-menu-end" id="appendCoin">
-                </ul>
-            </div>
-            <div class="row">
-                <div class="col-5 offset-1">
-                    剩余1.254个FRO
+            <div class="col-sm-3 offset-1" style="border: 1px solid #e9ebf2;">
+                <div class="row">
+                    <div id="subTitleDiv2">转移至交易（币币）账户</div>
+                </div>
+                <div style="width: 100%; border: 1px solid #e9ebf2"></div>
+                <div class="row" style="margin-top: 1rem">
+                    <div class="col-sm-5  offset-1" >
+                        <span v-text="transferCoinType"></span>
+                        <img v-bind:src="transferCoinSrc" style="border-radius: 20px; height: 35px" id="coinImg">
+                    </div>
+                    <div class="col-4">
+                        <div class="input-group mb-3">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">币种</button>
+                            <ul class="dropdown-menu dropdown-menu-end" id="appendCoin">
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10 offset-1">
+                        剩余{{transferUserOwnedCoinAmount}}个{{transferCoinType}}
+                    </div>
+
                 </div>
 
-            </div>
-            <div class="row" style="margin-top: 3rem">
-                <button class="btn btn-outline-dark">转移</button>
+                <div class="row" style="margin-top: 1rem">
+                    <div class="col-10 offset-1">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping">转换量</span>
+                            <input type="text" class="form-control" placeholder="Amount" aria-label="Amount" aria-describedby="addon-wrapping" v-model="transferAmount">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row" style="margin-top:10px">
+                    <span class="badge rounded-pill bg-info text-dark" v-show="questionShow">输入数额有误或余额不足</span>
+                    <span class="badge rounded-pill bg-success" v-show="successShow">成功</span>
+                </div>
+
+                <div class="row" style="padding: 14px;margin-top: 3rem">
+                    <button class="btn btn-outline-dark" @click="transferToAnotherAccount">转移</button>
+                </div>
+
             </div>
 
         </div>
 
     </div>
-
-</div>
 </body>
+<script>
+    var app3 = new Vue({
+        el:"#main",
+        data:{
+            userid:"",
+            alreadyLogin:false,
+            transferCoinId:1,
+            transferCoinSrc:"/static/img/coin/1.jpg",
+            transferCoinType:"FRO",
+            transferUserOwnedCoinAmount:0.000,
+            transferAmount:0.00,
+            questionShow:false,
+            successShow:false,
+
+
+            listCoinInfo:"",
+            sum:0.00,
+        },
+        methods:{
+            changeCoin:function(coinid)
+            {
+                app3.transferCoinId = coinid;
+                $.ajax({
+                    url:"/coinController/queryCompleteInfoById",
+                    method:"post",
+                    data:{"coinid":coinid},
+                    success:function(data)
+                    {
+                        app3.transferCoinType = data["abbre_name"];
+                        app3.transferCoinSrc="/static/img/coin/"+app3.transferCoinId+".jpg";
+                        app3.selectAmountById();
+                    }
+                });
+            },
+            listAllCoin:function()
+            {
+                if(app3.alreadyLogin)
+                {
+                    $.ajax({
+                        url:"/capitalAccountController/selectAllCoinByUserId",
+                        method:"post",
+                        data:{
+                            "userid":app3.userid
+                        },
+                        success:function (data)
+                        {
+                            app3.listCoinInfo = data;
+                            var sum = 0.00;
+                            for(j = 0; j < data.length; j++) {
+                                sum+=parseFloat(data[j]['total_worth']);
+                            }
+                            sum = sum.toFixed(2);
+                            app3.sum = app3.toThousands(sum);
+                            $($("div[name='progressBarDiv']")).ready(function ()
+                            {
+                                $("div[name='progressBarDiv']").each(function () {
+                                    $(this).css('width', $(this).parent().parent().parent().children(":first").html());
+                                });
+                            })
+
+                        }
+                    })
+                }
+            },
+            toThousands:function (num) {
+                var decimal = "";
+                if(num.toString().split('.').length == 2)
+                {
+                    decimal = num.toString().split('.')[1];
+                }
+                var result = '', counter = 0;
+                num = (num || 0).toString().split('.')[0];
+                for (var i = num.length - 1; i >= 0; i--) {
+                    counter++;
+                    result = num.charAt(i) + result;
+                    if (!(counter % 3) && i != 0) { result = ',' + result; }
+                }
+                return result + "." + decimal;
+            },
+            selectAmountById:function()
+            {
+                if(app3.userid!="" || app3.userid!=null)
+                {
+                    $.ajax({
+                        url:"/capitalAccountController/selectAmountById",
+                        method:"post",
+                        data:{
+                            "userid": app3.userid,
+                            "coinid": app3.transferCoinId
+                        },
+                        success:function(result)
+                        {
+                            app3.transferUserOwnedCoinAmount = result.toFixed(6);
+                        }
+                    });
+                }
+            },
+            transferToAnotherAccount:function ()
+            {
+                if(app3.transferAmount<=0)
+                {
+                    app3.questionShow = true;
+                    setTimeout(function (){app3.questionShow=false}, 2000)
+                }else
+                {
+                    $.ajax({
+                        url:"/capitalAccountController/transferIntoTradeAccount",
+                        method:"post",
+                        data:{
+                            "userid":app3.userid,
+                            "coinid":app3.transferCoinId,
+                            "amount":"-"+app3.transferAmount
+                        },
+                        success:function (effect)
+                        {
+                            if(effect<=0)
+                            {
+                                app3.questionShow = true;
+                                setTimeout(function (){app3.questionShow=false}, 2000)
+                            }
+                            else
+                            {
+                                app3.successShow = true;
+                                setTimeout(function (){app3.successShow=false}, 2000)
+                                app3.transferAmount = 0.00;
+                                app3.selectAmountById();
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    })
+</script>
+<script>
+    $(function () {
+        let userid = ${userid};
+        if (userid != null) {
+            app3.alreadyLogin = true;
+            app3.userid = userid;
+            $("#userImg").attr("src", "/static/img/userImg/"+userid+".jpg")
+            app3.listAllCoin();
+        } else {
+            app3.alreadyLogin = false;
+        }
+    })
+    $(function ()
+    {
+        app3.changeCoin(1);
+        app3.selectAmountById();
+    })
+</script>
 <script>
     $(function ()
     {
@@ -150,7 +324,7 @@
                     appendCoin = "<li><p hidden>"+coinid+"</p><a class='dropdown-item' name='linkChangeCoin'>"+abbre_name+"</a></li>";
                     $("#appendCoin").append($(appendCoin));
                 }
-                var coinid = $(this).parent().children(":first").text();
+                $("a[name='linkChangeCoin']").click(function(){app3.changeCoin($(this).parent().children(":first").text());});
             }
         })
 

@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.qinlin.entity.CapitalAccount;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+
 @Mapper
 public interface CapitalAccountMapper {
     int deleteByPrimaryKey(Integer accountid);
@@ -31,5 +34,11 @@ public interface CapitalAccountMapper {
 
     @Insert("insert into capital_account (userid, coinid, amount) values (#{userid}, #{coinid}, #{amount})")
     int transferInCreate(CapitalAccount account);
+
+    @Select("select accountid, coinid, amount from capital_account where userid = #{userid}")
+    List<LinkedHashMap> selectAllCoinByUserId(Integer userid);
+
+    @Update("update capital_account set amount = (amount+(#{amount})) where userid=#{userid} and coinid=#{coinid}")
+    int transferWithTradeAccount(Integer userid, Integer coinid, Double amount);
 
 }

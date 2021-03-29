@@ -122,7 +122,7 @@
                     <th scope="col">Total Charge</th>
                     <th scope="col" v-show="!transactionTypeUser">Service Charge</th>
                     <th scope="col" v-show="!transactionTypeUser">Type</th>
-                    <th scope="col" v-show="transactionTypeUser">Type (True for buy, False for sell)</th>
+                    <th scope="col" v-show="transactionTypeUser">Type</th>
                     <th scope="col">Time</th>
                 </tr>
                 </thead>
@@ -132,7 +132,7 @@
                         <td>{{ item.amount }}</td>
                         <td>$ {{ item.total_charge }}</td>
                         <td v-show="!transactionTypeUser">$ {{ item.service_charge_usd }}</td>
-                        <td v-show="transactionTypeUser">{{ item.buyerid==userid }}</td>
+                        <td v-show="transactionTypeUser">{{ item.buyerid==userid ? ('buy'):('sell') }}</td>
                         <td v-show="!transactionTypeUser">{{ item.type }}</td>
                         <td>{{ item.transaction_time }} {{ item.settle_time }}</td>
                     </tr>

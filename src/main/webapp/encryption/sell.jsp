@@ -224,7 +224,7 @@
                         },
                         success:function(result)
                         {
-                            app1.userOwnedCoinAmount = result;
+                            app1.userOwnedCoinAmount = result.toFixed(6);
                         }
                     });
                 }
