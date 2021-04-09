@@ -1,0 +1,50 @@
+@font-face {
+    /*自己起个名称，FontName是我起的，可修改*/
+    font-family: "NotoSansCJKsc";
+    /*url引入字体路径*/
+    src: url('/static/font/NotoSansCJKsc-Regular.otf') format('truetype');
+}
+@font-face {
+    /*自己起个名称，FontName是我起的，可修改*/
+    font-family: "NotoSansMonoCJK";
+    /*url引入字体路径*/
+    src: url('/static/font/NotoSansMonoCJKsc-Regular.otf') format('truetype');
+}
+/*div{
+    !* border: 1px solid dimgray; *!
+    font-family: "NotoSansMonoCJK";
+}*/
+#footerFooter{
+    background: #4B4B4D;
+    color: #ffffff;
+}
+#footerFooter a{
+    color: #ffffff;
+}
+#mediaDiv{
+    background: #D9D9D9;
+}
+#mediaUl
+{
+    margin-left: 10rem;
+}
+#mediaUl li{
+    float:left;
+    list-style: none;
+    margin-right:0.5rem;
+}
+#howDoIUl li
+{
+    padding:0.4rem;
+}
+#howDoIUl a
+{
+    color: #0D385B;
+    text-decoration:none;
+}
+#howDoIUl a:hover
+{
+    color: #534F4F;
+    text-decoration: underline;
+    transition-duration: 0.5s;
+}
